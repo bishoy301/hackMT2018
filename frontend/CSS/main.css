@@ -1,4 +1,21 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.884);
+    margin-left: 10%;
+    margin-top: 10%;
+}
 
+td, th {
+    border: 2px solid black;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(all) {
+    background-color: #dddddd;
+}
 
 body{
     background-image: url("../CSS/slideShowBG/1.jpg"); 
@@ -19,7 +36,6 @@ h1{
     margin: 0;
     padding: 0;
 }
-
 .topnav {
     top: 10%;
     background-color: #333;
@@ -48,10 +64,7 @@ input::placeholder{
 }
 input.active{
     background-color: green;
-}
-.active{
-    background-color: green;
-    color: white;
+    color: white;   
 }
 
 .topnav .icon {
