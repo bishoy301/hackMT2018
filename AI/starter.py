@@ -124,11 +124,18 @@ print("\t",buyList[0])
 print()
 print("\tSell listing:")
 print("\t",sellList[0])
+print()
 
+# All of the data we have collected and classified will be used to TRAIN a model
+# with which we will make predictions. We will be using tensorflow to create this model.
 
+## -- Training with Tensorflow (DO NOT include index item[0], this is the one we will be 
+##    making a prediction on)--
 
-## HIT TensorFlow
-
-## Update STATUS!!! in Database
+## Request latest listing from Spidy and plug it into the model to test for class.
+## Based on class result, update the status in the DB
+## The front end will use this status to display if the user whould buy or sell right now.
+## If taken from spidy the FIRST entry will be the most recent entry, and we will test it against the model.
+## Therefore we will EXCLUDE that point from training.
 
 # Rinse & Repeat
