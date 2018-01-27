@@ -1,7 +1,7 @@
 
 
 body{
-    background-image: url("slideShowBG/GWBG1.JPG");
+    background-image: url("../CSS/slideShowBG/1.jpg"); 
     background-color: black;
     margin-top: 0px; 
     margin-bottom: 0px; 
@@ -21,29 +21,33 @@ h1{
 }
 
 .topnav {
+    top: 10%;
     background-color: #333;
     overflow: hidden;
     border: none;   
     margin: 0;
     padding: 0;
+    z-index: 999;
 }
 
 .topnav input{
     float: left;
     display: block;
-    background-color: lightgray;
+    background-color: #333;
+    border: #333;
     text-align: center;
     padding: 10px 16px; 
-    text-decoration: none;
     font-size: 17px;
+    color: white;   
 }
-
+input::placeholder{
+    color: white;
+}
 .topnav input:hover {
-    background-color: darkslategray;
-    color: black;
+    color: white;
 }
 input.active{
- background-color: green;
+    background-color: green;
 }
 .active{
     background-color: green;
