@@ -1,0 +1,27 @@
+path {
+    stroke: steelblue; /* EDIT COLORS TO MATCH */
+    stroke-width: 1;
+    margin: 0 auto;
+    fill: none; /* EDIT COLORS TO MATCH */
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: lightgrey; /* EDIT COLORS TO MATCH */
+}
+
+.x.axis .minor {
+  stroke-opacity: .5; /* EDIT COLORS TO MATCH */
+}
+
+.x.axis path {
+  display: none; /* EDIT COLORS TO MATCH */
+}
+
+.y.axis line, .y.axis path { /* EDIT COLORS TO MATCH */
+  fill: none;
+  stroke: #000;
+}
