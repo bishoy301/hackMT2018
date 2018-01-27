@@ -1,26 +1,52 @@
 
+
+body{
+    background-image: url("slideShowBG/GWBG1.JPG");
+    background-color: black;
+    margin-top: 0px; 
+    margin-bottom: 0px; 
+    margin-left: 0px; 
+    margin-right: 0px;
+    padding: 0;
+}
+
+h1{
+    text-align: center;
+    color: white;
+    -webkit-text-stroke: .2px;
+    -webkit-text-stroke-color: lightgray; 
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+}
+
 .topnav {
     background-color: #333;
     overflow: hidden;
+    border: none;   
+    margin: 0;
+    padding: 0;
 }
 
-.topnav a {
+.topnav input{
     float: left;
     display: block;
-    color: #f2f2f2;
+    background-color: lightgray;
     text-align: center;
-    padding: 14px 16px;
+    padding: 10px 16px; 
     text-decoration: none;
     font-size: 17px;
 }
 
-.topnav a:hover {
-    background-color: #ddd;
+.topnav input:hover {
+    background-color: darkslategray;
     color: black;
 }
-
-.active {
-    background-color: #4CAF50;
+input.active{
+ background-color: green;
+}
+.active{
+    background-color: green;
     color: white;
 }
 
