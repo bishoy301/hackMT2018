@@ -76,22 +76,47 @@ async function evaluateItem(id) {
 
     if (itemPrices.buys.quantity > 10000 && itemPrices.sells.quantity > 10000) {
         // save to firebase
-        console.log(itemPrices.buys.quantity);
-        console.log(itemPrices.sells.quantity);
+        let itemsRef = db.ref('items');
 
+        // Pull buy info from firebase
+        let buysRef = itemsRef.child(itemPrices.id).child('buys');
+        
+        buysRef.once('value', (snapshot) => {
+            let val = snapshot.val();
+            let arr = snapshot.val() ? snapshot.val() : [];
+
+            arr.push({
+                listing_datetime: new Date().getTime(),
+                unit_price: itemPrices.buys.unit_price,
+                quantity: itemPrices.buys.quantity
+            })
+
+            buysRef.set(arr);
+        });
+
+        let sellsRef = itemsRef.child(itemPrices.id).child('sells');
+        
+        sellsRef.once('value', (snapshot) => {
+            let val = snapshot.val();
+            let arr = snapshot.val() ? snapshot.val() : [];
+
+            arr.push({
+                listing_datetime: new Date().getTime(),
+                unit_price: itemPrices.sells.unit_price,
+                quantity: itemPrices.sells.quantity
+            })
+
+            sellsRef.set(arr);
+        });
     } else {
         return;
     }
 }
 
-function saveToFirebase() {
-
-}
-
 function restartService() {
     // Set timeout for 15 minutes (?) and call runService
-    setTimeout(runService, 10000);
-    console.log('loopin');
+    setTimeout(runService, 900000);
+    console.log('Loop!');
 }
 
 runService();
