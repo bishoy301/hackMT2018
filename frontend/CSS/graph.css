@@ -2,9 +2,15 @@ path {
     stroke: steelblue; /* EDIT COLORS TO MATCH */
     stroke-width: 1;
     margin: 0 auto;
-    fill: none; /* EDIT COLORS TO MATCH */
-}
+    fill: none; /* EDIT COLORS TO MATCH */ 
+  }
 
+div{ 
+  background-color: white;
+  border: 1px solid black;
+  top: 30%;
+  left: 16%;
+}
 .axis {
   shape-rendering: crispEdges;
 }
