@@ -53,3 +53,9 @@ input.active{
 .topnav .icon {
     display: none;
 }
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
