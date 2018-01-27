@@ -6,7 +6,7 @@
 			/* tell the SVG path to be a thin blue line without any area fill */
 			path {
 				stroke: steelblue; /* EDIT COLORS TO MATCH */
-				stroke-width: 5;
+				stroke-width: 1;
 				fill: none; /* EDIT COLORS TO MATCH */
 			}
 
@@ -39,16 +39,32 @@
 
 
 	<script>
-
+//soooo much stack overflow / random other sites / done quickly - so any love is good love
+  var url = "http://www.gw2spidy.com/api/v0.9/json/listings/19729/buy/2";
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', "http://www.gw2spidy.com/api/v0.9/json/listings/19729/buy/2", true);
+	xhr.open('GET', url, true);
 	xhr.send();
 
 	xhr.addEventListener("readystatechange", processRequest, false);
+	//helper - this could probably be more general
+
+  function maxPrice(data){
+			var m = -Infinity, i = 0, n = data.results.length;
+			for (; i != n; ++i){
+				if (data.results[i].unit_price > m) {
+					m = data.results[i].unit_price;
+				}
+			}
+			return m;
+	}
+
+	function getDate(data) {
+	    return new Date(data.results.listing_datetime);
+	}
 
 	function processRequest(e) {
     if (xhr.readyState == 4 && xhr.status == 200) {
-        var newString = xhr.responseText.substr(2);
+        var newString = xhr.responseText;
         var data = JSON.parse(xhr.responseText);
         //alert(response.results[0].unit_price);
 				/* implementation heavily influenced by http://bl.ocks.org/1166403 */
@@ -56,13 +72,34 @@
 				var m = [80, 80, 80, 80]; // margins
 				var w = 1000 - m[1] - m[3]; // width
 				var h = 400 - m[0] - m[2]; // height
-				// MODIFY TO FIT OUR ITEM OBJECT
-			  //var data = [3, 6, 2, 7, 5, 2, 0, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 9, 2, 7];
+
+
+//another helper function
+// helper function
+
+//possible helpful code if date is formatted correctly ie not like the dummy JSON
+/*// helper function
+function getDate(d) {
+    return new Date(d.jsonDate);
+}
+
+// get max and min dates - this assumes data is sorted
+var minDate = getDate(data[0]),
+    maxDate = getDate(data[data.length-1]);
+
+var x = d3.time.scale().domain([minDate, maxDate]).range([0, w]);
+
+Then you don't need to deal with the time interval functions, you can just pass x a date:
+
+.attr("d", d3.svg.line()
+    .x(function(d) { return x(getDate(d)) })
+    .y(function(d) { return y(d.jsonHitCount) })
+);*/
 
 				// X scale will fit all values from data[] within pixels 0-w
-				var x = d3.scale.linear().domain([0, 1000]).range([0, w]);
+				var x = d3.scale.linear().domain([0, data.count]).range([0, w]);
 				// Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
-				var y = d3.scale.linear().domain([0, data.results.unit_price]).range([h, 0]);
+				var y = d3.scale.linear().domain([0, maxPrice(data)]).range([h, 0]);
 					// automatically determining max range can work something like this
 					// var y = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]);
 
@@ -109,14 +146,9 @@
 		  			// Add the line by appending an svg:path element with the data line we created above
 					// do this AFTER the axes above so that the line is above the tick-lines
 		  			graph.append("svg:path").attr("d", line(data.results));
-
-
     }
 }
 
 	</script>
-
-
-
 	</body>
 </html>
