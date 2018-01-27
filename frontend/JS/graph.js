@@ -1,5 +1,5 @@
 //soooo much stack overflow / random other sites / done quickly - so any love is good love
-var url = "http://www.gw2spidy.com/api/v0.9/json/listings/19729/buy/2";
+var url = "http://www.gw2spidy.com/api/v0.9/json/listings/19729/buy/1";
 var xhr = new XMLHttpRequest();
 xhr.open('GET', url, true);
 xhr.send();
@@ -91,7 +91,7 @@ Then you don't need to deal with the time interval functions, you can just pass 
                 graph.append("svg:g")
                       .attr("class", "x axis")
                       .attr("transform", "translate(0," + h + ")")
-                      .call(xAxis);
+                      .call(xAxis)
 
 
                 // create left yAxis
