@@ -16,14 +16,6 @@ var limiter = new RateLimiter();
 
 async function runService() {
     try {
-        // Pull all crafting material ids
-        // let craftingIds = await httpRequest({
-        //     host: 'api.guildwars2.com',
-        //     port: 443,
-        //     method: 'GET',
-        //     path: '/v2/materials'
-        // });
-
         let response = await limiter.request({
             url       : 'https://api.guildwars2.com/v2/materials',
             method    : 'get'
@@ -34,14 +26,6 @@ async function runService() {
         //console.log(craftingIds);
 
         for (craftingId of craftingIds) {
-            // Pull all current items from prices api
-            // let craftingItemsList = await httpRequest({
-            //     host: 'api.guildwars2.com',
-            //     port: 443,
-            //     method: 'GET',
-            //     path: `/v2/materials/${craftingId}`
-            // });
-
             response = await limiter.request({
                 url       : `https://api.guildwars2.com/v2/materials/${craftingId}`,
                 method    : 'get'
@@ -68,13 +52,6 @@ async function runService() {
 }
 
 async function evaluateItem(id) {
-    // let itemInfo = await httpRequest({
-    //     host: 'api.guildwars2.com',
-    //     port: 443,
-    //     method: 'GET',
-    //     path: `/v2/items/${id}`
-    // });
-
     let response = await limiter.request({
         url       : `https://api.guildwars2.com/v2/items/${id}`,
         method    : 'get'
@@ -87,13 +64,6 @@ async function evaluateItem(id) {
         return (element === 'NoSell');
     });
     if (found) return;
-
-    // let itemPrices = await httpRequest({
-    //     host: 'api.guildwars2.com',
-    //     port: 443,
-    //     method: 'GET',
-    //     path: `/v2/commerce/prices/${id}`
-    // });
 
     response = await limiter.request({
         url       : `https://api.guildwars2.com/v2/commerce/prices/${id}`,
@@ -123,41 +93,5 @@ function restartService() {
     setTimeout(runService, 10000);
     console.log('loopin');
 }
-
-// function httpRequest(params, postBody) {
-//     //let _params = params;
-//     return new Promise((resolve, reject) => {
-//         let req = https.request(params, (res) => {
-//             if (res.statusCode < 200 || res.statusCode >= 300) {
-//                 return reject(new Error(`Unexpected ${res.statusCode} hitting ${params.path}`));
-//             }
-//             let body = [];
-
-//             res.on('data', (chunk) => {
-//                 body.push(chunk);
-//             })
-
-//             res.on('end', () => {
-//                 try {
-//                     body = JSON.parse(Buffer.concat(body).toString());
-//                 } catch(err) {
-//                     reject(err);
-//                 }
-
-//                 resolve(body);
-//             });
-//         });
-
-//         req.on('error', (err) => {
-//             reject(err);
-//         });
-
-//         if (postBody) {
-//             req.write(postBody);
-//         }
-
-//         req.end();
-//     });
-// }
 
 runService();
