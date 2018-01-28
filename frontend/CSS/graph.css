@@ -1,15 +1,25 @@
 path {
-    stroke: steelblue; /* EDIT COLORS TO MATCH */
-    stroke-width: 1;
     margin: 0 auto;
+    position: center;
     fill: none; /* EDIT COLORS TO MATCH */ 
   }
+
+.buy {
+  stroke: steelblue;
+  stroke-width: 1;  /*EDIT COLORS TO MATCH */
+}
+
+.sell {
+  stroke: red;
+  stroke-width: 1;
+}
 
 div{ 
   background-color: white;
   border: 1px solid black;
   top: 30%;
   left: 16%;
+  margin-left: 5%;
 }
 .axis {
   shape-rendering: crispEdges;
@@ -29,5 +39,5 @@ div{
 
 .y.axis line, .y.axis path { /* EDIT COLORS TO MATCH */
   fill: none;
-  stroke: #000;
+  /*stroke: #000;*/
 }
