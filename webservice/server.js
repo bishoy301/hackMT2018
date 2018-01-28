@@ -1,6 +1,7 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const app = express();
+var bodyParser = require('body-parser'); 
 
 
 const serviceAccount = require("./hackmt2018-ebd27-firebase-adminsdk-d6psx-c9249b56da.json");
@@ -12,6 +13,9 @@ admin.initializeApp({
 
 let db = admin.database();
 let itemsRef = db.ref('items');
+
+app.use(bodyParser.urlencoded()); 
+app.use(bodyParser.json()); 
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -72,7 +76,8 @@ app.post('/results/:id', (req, res) => {
     try {
         let id = Number.parseInt(req.params.id);
         let body = Object.assign({}, req.body);
-        itemsRef.child(id).child('result').set(body);
+        console.log(req.body); 
+        itemsRef.child(id).child('result').update(body);
 
         res.send(200);
     } catch(err) {
