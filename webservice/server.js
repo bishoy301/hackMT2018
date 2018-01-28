@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/sell/:id', (req, res) => {
-    let id = Number.parseInt(req.params.id);
+    let id = req.params.id;
     itemsRef.child(id).child('sells').once('value', (snapshot) => {
         let sellData = {
             results: []
