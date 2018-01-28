@@ -66,15 +66,17 @@ app.get('/buy/:id', (req, res) => {
 
 app.get('/results/:id', (req, res) => {
     res.send('not ready yet, sorry about it :)')
-}).post((req, res) => {
+});
+
+app.post('/results/:id', (req, res) => {
     try {
-        let id = Number.parse(req.params.id);
+        let id = Number.parseInt(req.params.id);
         let body = Object.assign({}, req.body);
         itemsRef.child(id).child('result').set(body);
-        console.log('I got called!')
 
         res.send(200);
     } catch(err) {
+        console.error(err);
         res.send(500);
     }
 });
