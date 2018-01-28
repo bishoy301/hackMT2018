@@ -74,7 +74,9 @@ async function evaluateItem(id) {
 
     //console.log(itemInfo);
 
-    if (itemPrices.buys.quantity > 10000 && itemPrices.sells.quantity > 10000) {
+    if (itemPrices.buys && itemPrices.sells 
+        && itemPrices.buys.quantity > 10000 
+        && itemPrices.sells.quantity > 10000) {
         // save to firebase
         let itemsRef = db.ref('items');
 
