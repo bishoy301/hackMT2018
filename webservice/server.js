@@ -21,6 +21,31 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.get('/items', (req, res) => {
+    itemsRef.once('value', snapshot => res.json(Object.keys(snapshot.val())));
+
+});
+
+app.delete('/items', (req, res) => {
+    try {
+        itemsRef.once('value', snapshot => {
+            let allItems = snapshot.val();
+
+            let keys = Object.keys(allItems);
+
+            keys.forEach((key) => {
+                if (!allItems[key].buys) delete allItems[key];
+            });
+
+            itemsRef.set(allItems);
+
+            res.sendStatus(200);
+        });
+    } catch (err) {
+        res.sendStatus(500);
+    }
+});
+
 app.get('/sell/:id', (req, res) => {
     let id = req.params.id;
     itemsRef.child(id).child('sells').once('value', (snapshot) => {
@@ -63,13 +88,29 @@ app.get('/buy/:id', (req, res) => {
 
         res.json(buyData);
     });
-
-
-
 });
 
 app.get('/results/:id', (req, res) => {
-    res.send('not ready yet, sorry about it :)')
+   
+    try {
+        let id = Number.parseInt(req.params.id);
+        let body = Object.assign({}, req.body);
+        itemsRef.child(id).child('result').once('value', (snapshot) => {
+            res.json(snapshot.val());
+
+            // res.json(
+            //     buyAverage: Number.parseFloat(body.buyAverage),
+            //     discount: Number.parseFloat(body.discount),
+            //     sellAverage: Number.parseFloat(body.sellAverage),
+            //     status: Number.parseInt(body.status),
+            //     timestamp: body.timestamp
+            // );
+        });
+
+    } catch(err) {
+        console.error(err);
+    }
+
 });
 
 app.post('/results/:id', (req, res) => {
