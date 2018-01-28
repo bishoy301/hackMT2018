@@ -133,11 +133,58 @@ app.post('/results/:id', (req, res) => {
 });
 
 app.get('/bestResults/buy', (req, res) => {
+    // return an array of ids, match status, sorted in descending order by discount
+    itemsRef.orderByChild('result/status').equalTo(1).once("value", (data) => {
+        let items = data.val(); 
 
+        
+
+        // So, I was thinking, we're gonna use an old classic a DBA once taught me.
+        let dataAsArray = []; 
+        keys = Object.keys(items); 
+         
+        keys.forEach((key) => {
+            let obj = {};
+            obj[key] = items[key].result;
+            dataAsArray.push(obj); 
+        }); 
+
+        dataAsArray.sort((a, b) => {
+            return b[Object.keys(b)[0]].discount - a[Object.keys(a)[0]].discount; 
+        }); 
+        
+
+        res.send(JSON.stringify(dataAsArray)); 
+    }); 
 });
 
 app.get('/bestResults/sell', (req, res) => {
 
+    // return an array of ids, match status, sorted in descending order by discount
+    itemsRef.orderByChild('result/status').equalTo(2).once("value", (data) => {
+        let items = data.val(); 
+
+
+        // So, I was thinking, we're gonna use an old classic a DBA once taught me.
+        let dataAsArray = []; 
+        keys = Object.keys(items); 
+     
+        keys.forEach((key) => {
+            let obj = {};
+            obj[key] = items[key].result;
+         dataAsArray.push(obj); 
+        }); 
+
+        dataAsArray.sort((a, b) => {
+            return b[Object.keys(b)[0]].discount - a[Object.keys(a)[0]].discount; 
+        }); 
+    
+
+        res.send(JSON.stringify(dataAsArray)); 
+    }); 
 });
 
 app.listen(3000, () => console.log('WebService app listening on port 3000!'))
+
+
+
