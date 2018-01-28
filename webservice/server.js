@@ -76,13 +76,18 @@ app.post('/results/:id', (req, res) => {
     try {
         let id = Number.parseInt(req.params.id);
         let body = Object.assign({}, req.body);
-        console.log(req.body); 
-        itemsRef.child(id).child('result').update(body);
+        itemsRef.child(id).child('result').set({
+            buyAverage: Number.parseFloat(body.buyAverage),
+            discount: Number.parseFloat(body.discount),
+            sellAverage: Number.parseFloat(sellAverage),
+            status: Number.parseInt(body.status),
+            timestamp: body.timestamp
+        });
 
-        res.send(200);
+        res.sendStatus(200);
     } catch(err) {
         console.error(err);
-        res.send(500);
+        res.sendStatus(500);
     }
 });
 
