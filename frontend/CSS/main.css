@@ -1,14 +1,23 @@
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 80%;
     margin-left: 10%;
+    width: 80%;
+    margin-bottom: 10%;
+}
+
+.table {
+    width: 80%;
 }
 
 td, th {
     border: 2px solid black;
     text-align: left;
     padding: 8px;
+}
+
+td {
+    cursor: pointer;
 }
 
 tr:nth-child(all) {

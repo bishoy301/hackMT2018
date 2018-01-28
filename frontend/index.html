@@ -2,7 +2,10 @@
 <html>
 
 <head>
-  <meta charset=" utf-8">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
   <link rel="stylesheet" href="CSS/main.css">
   <link rel="stylesheet" href="CSS/graph.css">
 
@@ -11,24 +14,35 @@
 <body>
   <h1> Finance Wars 2</h1>
   <div class="topnav" id="myTopnav"></div>
-  <h2 id=‘buyHeader’ class=‘p-1’ hidden>Top Items to Buy</h2>
-  <table id=“buy” class=‘table’ hidden>
+
+  <div class="btn-group btn-group-toggle" >
+    <label class="btn btn-secondary active">
+      <input type='radio' name="options" id="option1" autocomplete="off" checked> Sell
+    </label>
+    <label class="btn btn-secondary">
+      <input type='radio' name="options" id="option2" autocomplete="off"> Buy
+    </label>
+  </div>
+  
+  <h2 id='buyHeader'>Top Items to Buy</h2>
+  <table id='buy' class="table">
     <thead id=‘buyHeaderRow’>
-      <th>Rank</th>
+      <th>Item Id</th>
       <th>Buy Average</th>
       <th>Discount</th>
     </thead>
   </table>
-  <h2 id=‘sellHeader’ class=‘p-1’>Top Items to Sell</h2>
-  <table id='sell' class=‘table’ >
+  <h2 id=‘sellHeader’>Top Items to Sell</h2>
+  <table id='sell' class="table">
     <tr id=‘sellHeaderRow’>
-      <th>Rank</th>
+      <th>Item Id</th>
       <th>Sell Average</th>
       <th>Markup</th>
     </tr>
   </table>
 
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="JS/homepage.js" defer></script>
 
