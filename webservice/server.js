@@ -1,7 +1,6 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const app = express();
-var bodyParser = require('body-parser'); 
 
 
 const serviceAccount = require("./hackmt2018-ebd27-firebase-adminsdk-d6psx-c9249b56da.json");
@@ -14,15 +13,13 @@ admin.initializeApp({
 let db = admin.database();
 let itemsRef = db.ref('items');
 
-app.use(bodyParser.urlencoded()); 
-app.use(bodyParser.json()); 
-
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+
 app.get('/sell/:id', (req, res) => {
-    let id = req.params.id;
+    let id = Number.parseInt(req.params.id);
     itemsRef.child(id).child('sells').once('value', (snapshot) => {
         let sellData = {
             results: []
@@ -30,7 +27,7 @@ app.get('/sell/:id', (req, res) => {
         let val = snapshot.val();
 
         if (val) {
-            val.forEach((element) => {
+            val.forEach((element) => {                
                 sellData.results.push({
                     unit_price: element.unit_price,
                     quantity: element.quantity,
@@ -52,7 +49,7 @@ app.get('/buy/:id', (req, res) => {
         let val = snapshot.val();
 
         if (val) {
-            val.forEach((element) => {
+            val.forEach((element) => {                
                 buyData.results.push({
                     unit_price: element.unit_price,
                     quantity: element.quantity,
@@ -70,23 +67,28 @@ app.get('/buy/:id', (req, res) => {
 
 app.get('/results/:id', (req, res) => {
     res.send('not ready yet, sorry about it :)')
-});
-
-app.post('/results/:id', (req, res) => {
+}).post((req, res) => {
     try {
         let id = Number.parseInt(req.params.id);
         let body = Object.assign({}, req.body);
-        console.log(req.body); 
-        itemsRef.child(id).child('result').update(body);
-
+        itemsRef.child(id).child('result').set({
+            buyAverage: Number.parseFloat(body.buyAverage),
+            discount: Number.parseFloat(body.discount),
+            sellAverage: Number.parseFloat(sellAverage),
+            status: Number.parseInt(body.status),
+            timestamp: body.timestamp
+        });
+        
         res.send(200);
     } catch(err) {
-        console.error(err);
         res.send(500);
     }
 });
 
 app.get('/bestResults/buy', (req, res) => {
+ //before once, do orderby, pass path that we want results of
+ //order by discount- higher discount or markup is best
+ //order by discount descending
 
 });
 
