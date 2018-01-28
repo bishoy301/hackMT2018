@@ -10,7 +10,6 @@ admin.initializeApp({
 });
 
 var db = admin.database();
-var ref = db.ref("restricted_access/secret_document");
 
 var limiter = new RateLimiter();
 
