@@ -20,7 +20,7 @@ req = ["/materials", "/buy/1", "/sell/1"]
 materialCats = requests.get((gw2API+req[0])).json()
 buyCount = 0
 sellCount = 0
-nothingCount = 0s
+nothingCount = 0
 
 ids = set()     # These are all the items we will be analyzing
 for x in range(len(materialCats)):
@@ -243,9 +243,16 @@ for i in range(numItems):
 
     # Push:
     # sellAverage, buyAverage, status, discount, timestamp
-    print(sellAverage, buyAverage, status, discount, datetime.datetime.now())
-
-    print()
+    #print(sellAverage, buyAverage, status, discount, datetime.datetime.now())
+    #print()
+    result = {'sellAverage':sellAverage, 'buyAverage':buyAverage, 'status':status, 'discount':discount, 'timestamp':datetime.datetime.now()}
+    url = "http://localhost:3000/results/"+ str(ids[i])
+    r = requests.post(url, data=result)
+    if (r.status_code != 200):
+        print(r.status_code)
+        break
+    else:
+        print('Posted!')
 
 # DONE ALL ITEMS
 print('Items:', numItems)
