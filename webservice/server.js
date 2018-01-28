@@ -79,7 +79,7 @@ app.post('/results/:id', (req, res) => {
         itemsRef.child(id).child('result').set({
             buyAverage: Number.parseFloat(body.buyAverage),
             discount: Number.parseFloat(body.discount),
-            sellAverage: Number.parseFloat(sellAverage),
+            sellAverage: Number.parseFloat(body.sellAverage),
             status: Number.parseInt(body.status),
             timestamp: body.timestamp
         });
