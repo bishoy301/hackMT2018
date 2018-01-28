@@ -26,7 +26,7 @@ app.get('/sell/:id', (req, res) => {
         let val = snapshot.val();
 
         if (val) {
-            val.forEach((element) => {                
+            val.forEach((element) => {
                 sellData.results.push({
                     unit_price: element.unit_price,
                     quantity: element.quantity,
@@ -48,7 +48,7 @@ app.get('/buy/:id', (req, res) => {
         let val = snapshot.val();
 
         if (val) {
-            val.forEach((element) => {                
+            val.forEach((element) => {
                 buyData.results.push({
                     unit_price: element.unit_price,
                     quantity: element.quantity,
@@ -71,7 +71,8 @@ app.get('/results/:id', (req, res) => {
         let id = Number.parse(req.params.id);
         let body = Object.assign({}, req.body);
         itemsRef.child(id).child('result').set(body);
-        
+        console.log('I got called!')
+
         res.send(200);
     } catch(err) {
         res.send(500);
