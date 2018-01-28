@@ -1,6 +1,6 @@
 # Gettin Goin
 
-import requests, sys, datetime
+import requests, sys, datetime, time
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
@@ -16,13 +16,13 @@ spidyAPI = "http://www.gw2spidy.com/api/v0.9/json/listings" # append { itemIdNum
 req = ["/materials", "/buy/1", "/sell/1"]
 
 # BEGINNING OF TIME INTERVAL
+# WHILE TRUE
 materialCats = requests.get((gw2API+req[0])).json()
 buyCount = 0
 sellCount = 0
-nothingCount = 0
-#print("All IDS:")
+nothingCount = 0s
 
-ids = set()     # These are al the items we will be analyzing
+ids = set()     # These are all the items we will be analyzing
 for x in range(len(materialCats)):
     tempIds = requests.get((gw2API + req[0] + '/' + str(materialCats[x]))).json()
     for y in range(len(tempIds['items'])):
@@ -35,8 +35,7 @@ numItems = len(ids)
 
 # Now we look up each item by its id, both sell and buy listings.
 # FOR EACH ITEM...
-    # BUY------------------------------------------------------------------------
-# Let's do this with **** ONE ITEM ****
+# BUY------------------------------------------------------------------------
 for i in range(numItems):
     sellPredicted = 0
     buyPredicted = 0
@@ -56,7 +55,7 @@ for i in range(numItems):
     #print("URL: ", spidyAPI + '/' + str(ids[1]) + req[1]  )
     #print("BUY - Looking for Those Low Low Prices Ya'll")
     for x in range(totalEntries):
-        # Add day of the week while we are here
+        # Set value for day of the week and time while we are here
         buyList[x]['dow'] = \
         datetime.date( \
         int(buyList[x]['listing_datetime'][0:4]), \
@@ -69,11 +68,9 @@ for i in range(numItems):
         buyList[x]['listing_datetime'][17:19]))
 
         avgSum += buyList[x]['unit_price']
-        #print(buyList[x]['unit_price'], ' - ', buyList[x]['dow'], end=', ')
         buyAverage = avgSum/totalEntries
-        #print("Average Price: ", averagePrice)
 
-        # Now to classify the data - we are looking for the valleys, the minimum "peaks" that are
+        # Now to classify the BUY data - we are looking for the valleys, the minimum "peaks" that are
         # also below the average price. They will be classified as 1, everthing else 0.
         buyMatrix = []
         buyClasses = []
@@ -101,18 +98,20 @@ for i in range(numItems):
 #print('Buy Classified')
 #print()
 
-# END OF BUY ---------------------------------------------------------------------
+    # END OF BUY ---------------------------------------------------------------------
 
     # SELL------------------------------------------------------------------------
-
-    sellList = requests.get((spidyAPI + '/' + str(ids[i]) + req[2] )).json()['results']
+    try:
+        sellList = requests.get((spidyAPI + '/' + str(ids[i]) + req[2] )).json()['results']
+    except:
+        pass
     avgSum = 0
     totalEntries = len(sellList)
 #print("Item: ", ids[1])
 #print("URL: ", spidyAPI + '/' + str(ids[1]) + req[2]  )
 #print("SELL - Looking for Those High Prices Now Ya'll")
     for x in range(totalEntries):
-    # Add day of the week while we are here
+    # Set value for day of the week and time while we are here
         sellList[x]['dow'] = \
         datetime.date( \
         int(sellList[x]['listing_datetime'][0:4]), \
@@ -130,7 +129,7 @@ for i in range(numItems):
 
 #print("Average Price: ", averagePrice)
 
-# Now to classify the data - we are looking for the maximumpeaks that are
+# Now to classify the SELL data - we are looking for the maximumpeaks that are
 # also above the average price. They will be classified as 1, everthing else 0.
 # Initializing classes
     sellMatrix = []
@@ -159,7 +158,6 @@ for i in range(numItems):
 
 #print('Sell Classified')
 #print()
-
 
 # All of the data we have collected and classified will be used to TRAIN 2 models (one for buy,
 # one for sell) with which we will make predictions. We will be using sci-kit learn to create this model.
@@ -200,7 +198,7 @@ for i in range(numItems):
         print('BUY!')
         buyCount += 1
         status = 1
-        discount = 1 - (sellXtoPredict[0][0]/sellAverage)
+        discount = 1 - (buyXtoPredict[0]/buyAverage)
 
 
 
@@ -235,7 +233,7 @@ for i in range(numItems):
         print('SELL!')
         sellCount += 1
         status = 2
-        discount = (sellXtoPredict[0][0]/sellAverage) - 1
+        discount = (sellXtoPredict[0]/sellAverage) - 1
 
     if ( not sellPredicted ) and ( not buyPredicted ):
         print('Do Nothing')
@@ -243,12 +241,8 @@ for i in range(numItems):
         status = 0
         discount = 0
 
-    #Push:
-    # sellAverage
-    # buyAverage
-    # status
-    # discount
-    # timestamp
+    # Push:
+    # sellAverage, buyAverage, status, discount, timestamp
     print(sellAverage, buyAverage, status, discount, datetime.datetime.now())
 
     print()
@@ -260,11 +254,15 @@ print('Sell: ', sellCount)
 print('Do Nothing:', nothingCount)
 
 print(datetime.datetime.now())
+
+# time.sleep('15 minutes')
+# RESART TIME INTERVAL
+
 ## Take latest listing from Spidy (which is the 0 index from our original request)
 ## and plug it into the model to test for class. Based on class result, update the status in the DB
-## The front end will use this status to display if the user whould buy or sell right now.
+## The front end will use this status to display if the user should buy or sell right now.
 ## If taken from spidy the FIRST entry will be the most recent entry, and we will test it against the model.
-## Therefore we will EXCLUDE that point from training.
+## Therefore we will EXCLUDED that point from training.
 
 # *** To pass on to the DB:
 # look up ID number, update status & average price
