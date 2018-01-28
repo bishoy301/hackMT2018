@@ -1,0 +1,43 @@
+path {
+    margin: 0 auto;
+    position: center;
+    fill: none; /* EDIT COLORS TO MATCH */ 
+  }
+
+.buy {
+  stroke: steelblue;
+  stroke-width: 1;  /*EDIT COLORS TO MATCH */
+}
+
+.sell {
+  stroke: red;
+  stroke-width: 1;
+}
+
+div{ 
+  background-color: white;
+  border: 1px solid black;
+  top: 30%;
+  left: 16%;
+  margin-left: 5%;
+}
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: lightgrey; /* EDIT COLORS TO MATCH */
+}
+
+.x.axis .minor {
+  stroke-opacity: .5; /* EDIT COLORS TO MATCH */
+}
+
+.x.axis path {
+  display: none; /* EDIT COLORS TO MATCH */
+}
+
+.y.axis line, .y.axis path { /* EDIT COLORS TO MATCH */
+  fill: none;
+  /*stroke: #000;*/
+}
