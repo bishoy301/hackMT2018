@@ -2,9 +2,7 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 80%;
-    background-color: rgba(255, 255, 255, 0.884);
     margin-left: 10%;
-    margin-top: 10%;
 }
 
 td, th {
@@ -38,6 +36,11 @@ h1{
     padding: 5;
     margin-top: 0%;
 }
+
+h2 {
+    text-align: center;
+}
+
 .topnav {
     top: 10%;
     background-color: #333;
