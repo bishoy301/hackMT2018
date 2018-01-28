@@ -43,34 +43,37 @@ h1{
     border: none;   
     margin: 0;
     padding: 0;
-    z-index: 999;
 }
 
-.topnav input{
+.topnav a{
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
     float: left;
     display: block;
-    background-color: #333;
-    border: #333;
+    color: white;
+}
+.topnav input{
     text-align: center;
-    padding: 10px 16px; 
+    padding: 14px 16px;
+    text-decoration: none;
     font-size: 17px;
-    color: white;   
+    float: left;
+    display: block;
+    color: white;
+    background-color: #333;
+    border-width: 0;
 }
 input::placeholder{
     color: white;
 }
-.topnav input:hover {
-    color: white;
+.topnav a:hover {
+   background-color: slategray;
 }
-input.active{
-    background-color: green;
-    color: white;   
-}
-
 .topnav .icon {
     display: none;
 }
-
 .line {
     fill: none;
     stroke: steelblue;
