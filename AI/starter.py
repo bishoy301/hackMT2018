@@ -70,7 +70,7 @@ for i in range(numItems):
 
         avgSum += buyList[x]['unit_price']
         #print(buyList[x]['unit_price'], ' - ', buyList[x]['dow'], end=', ')
-        averagePrice = avgSum/totalEntries
+        buyAverage = avgSum/totalEntries
         #print("Average Price: ", averagePrice)
 
         # Now to classify the data - we are looking for the valleys, the minimum "peaks" that are
@@ -88,10 +88,10 @@ for i in range(numItems):
 
         if ((prevVal > currVal) and \
         (nextVal > currVal) and \
-        (prevVal < averagePrice) and \
-        (currVal < averagePrice) and \
-        (nextVal < averagePrice)) or \
-        (currVal < (0.95 * averagePrice)):
+        (prevVal < buyAverage) and \
+        (currVal < buyAverage) and \
+        (nextVal < buyAverage)) or \
+        (currVal < (0.95 * buyAverage)):
             buyClasses.append(1)
         else:
             buyClasses.append(0)
@@ -126,7 +126,7 @@ for i in range(numItems):
 
         avgSum += sellList[x]['unit_price']
     # print(sellList[x]['unit_price'], ' - ', sellList[x]['dow'], end=', ')
-    averagePrice = avgSum/totalEntries
+    sellAverage = avgSum/totalEntries
 
 #print("Average Price: ", averagePrice)
 
@@ -146,10 +146,10 @@ for i in range(numItems):
 
         if ((prevVal < currVal) and \
         (nextVal < currVal) and \
-        (prevVal > averagePrice) and \
-        (currVal > averagePrice) and \
-        (nextVal > averagePrice)) or \
-        (currVal > (1.05 * averagePrice)):
+        (prevVal > sellAverage) and \
+        (currVal > sellAverage) and \
+        (nextVal > sellAverage)) or \
+        (currVal > (1.05 * sellAverage)):
             sellClasses.append(2)
         else:
             sellClasses.append(0)
@@ -199,6 +199,9 @@ for i in range(numItems):
     if(buyPredicted):
         print('BUY!')
         buyCount += 1
+        status = 1
+        discount = 1 - (sellXtoPredict[0][0]/sellAverage)
+
 
 
 # SELL ****
@@ -231,14 +234,26 @@ for i in range(numItems):
     if (sellPredicted):
         print('SELL!')
         sellCount += 1
+        status = 2
+        discount = (sellXtoPredict[0][0]/sellAverage) - 1
 
     if ( not sellPredicted ) and ( not buyPredicted ):
         print('Do Nothing')
         nothingCount += 1
+        status = 0
+        discount = 0
+
+    #Push:
+    # sellAverage
+    # buyAverage
+    # status
+    # discount
+    # timestamp
+    print(sellAverage, buyAverage, status, discount, datetime.datetime.now())
 
     print()
 
-
+# DONE ALL ITEMS
 print('Items:', numItems)
 print('Buy: ', buyCount)
 print('Sell: ', sellCount)
@@ -256,4 +271,4 @@ print(datetime.datetime.now())
 
 # Rinse & Repeat FOR EACH Item
 
-# Rinse & Repeat FOR TIME Interval'''
+# Rinse & Repeat FOR TIME Interval
